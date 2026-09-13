@@ -4,7 +4,10 @@ Anúncios UGC (creator falando pro celular, one-take de 30 s, 9:16, 1080p) com S
 partir do pack "The Seedance 2.5 UGC Ads Pack" (Zubair Trabzada · AI Workshop, 2026), adaptado
 pro ecossistema INEMA (Magnific MCP como alvo principal; Higgsfield e fal.ai como secundários).
 
-**App online (modo Template):** https://inematds.github.io/ugc-seedance25/
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/ugc-seedance25/guia/**
+App online (modo Template): https://inematds.github.io/ugc-seedance25/app/public/
 
 Duas entregas que compartilham o mesmo conteúdo:
 
