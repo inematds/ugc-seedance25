@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INEMA · UGC Seedance 2.5</title>
+<meta name="description" content="Gerador de brief UGC: 3 prompts (produto, creator, vídeo one-take 30 s) para Seedance 2.5.">
+<style>
+  :root{--bg:#0b0b0d;--panel:#141418;--panel2:#1b1b21;--line:#26262e;--txt:#e8e4dc;--muted:#9a958b;--amber:#f0b429;--amber2:#c98a0a;--ok:#5fd18a;--warn:#f26d6d;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-block:0 48px;padding-inline:16px}
+  a{color:var(--amber)}
+  header{max-width:1180px;margin:0 auto;padding:28px 0 12px;display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between}
+  h1{font-size:22px;margin:0;letter-spacing:.02em}
+  h1 span{color:var(--amber)}
+  .sub{color:var(--muted);font-size:13px}
+  main{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:20px}
+  @media(max-width:900px){main{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--amber);margin:0 0 12px}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.06em}
+  input,textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:9px 10px;font:inherit}
+  textarea{min-height:64px;resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--amber2)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .formats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+  .fmt{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:7px 8px;cursor:pointer;font-size:12px;line-height:1.25}
+  .fmt b{display:block;color:var(--txt);font-size:12px}
+  .fmt small{color:var(--muted)}
+  .fmt.on{border-color:var(--amber);background:#241d0c}
+  .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{flex:1;background:var(--panel2);border:0;color:var(--muted);padding:8px;cursor:pointer;font:inherit}
+  .seg button.on{background:var(--amber);color:#111;font-weight:600}
+  .btn{background:var(--amber);color:#111;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer;font:inherit;font-weight:700}
+  .btn.sec{background:var(--panel2);color:var(--txt);border:1px solid var(--line);font-weight:500}
+  .btn:disabled{opacity:.5;cursor:wait}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .step{margin-bottom:16px}
+  .step .head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .step .head h3{margin:0;font-size:14px}
+  .params{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:#0f0f12;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;white-space:pre-wrap}
+  pre{font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;background:#0f0f12;border:1px solid var(--line);border-radius:8px;padding:12px;margin:0;line-height:1.5}
+  .copy{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px;font:inherit;font-size:12px}
+  .copy:hover{border-color:var(--amber);color:var(--amber)}
+  .lines{display:grid;gap:8px}
+  .line{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:start}
+  .line .t{font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:10px}
+  .line small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  .count{font-family:var(--mono);font-size:12px;margin-top:6px}
+  .count.ok{color:var(--ok)} .count.bad{color:var(--warn)}
+  .rules{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .rules li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:13px}
+  .rules li input{width:auto;margin-top:4px}
+  .rules b{display:block}
+  .rules span{color:var(--muted)}
+  .muted{color:var(--muted);font-size:13px}
+  .err{color:var(--warn);font-size:13px;margin-top:8px;white-space:pre-wrap}
+  .note{background:#1a1509;border:1px solid #3a2f10;border-radius:8px;padding:10px;font-size:13px;margin-bottom:12px}
+  .hist{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .hist button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer;font:inherit;font-size:12px}
+  .hidden{display:none!important}
+  footer{max-width:1180px;margin:32px auto 0;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>INEMA · <span>UGC Seedance 2.5</span></h1>
+    <div class="sub">Brief → 3 prompts (produto · creator · vídeo one-take 30 s). Receita do pack "Seedance 2.5 UGC Ads", adaptada pra Magnific, Higgsfield e fal.ai.</div>
+  </div>
+  <div class="sub">v<span id="ver"></span></div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>1 · Brief</h2>
+
+    <label>Modo</label>
+    <div class="seg" id="mode">
+      <button data-v="template" class="on">Template (sem custo)</button>
+      <button data-v="ai">IA (Claude escreve)</button>
+    </div>
+    <div class="muted" id="modeHelp" style="margin-top:4px">Template: você escreve as falas nos campos, o app monta os prompts. IA: o servidor pede pro Claude escrever tudo a partir do brief.</div>
+
+    <div class="row">
+      <div><label>Marca</label><input id="brand" placeholder="ex.: DEW (ou vazio)"></div>
+      <div><label>Idioma das falas</label>
+        <select id="lang"><option value="pt">PT-BR</option><option value="en">English</option><option value="es">Español</option></select></div>
+    </div>
+    <label>Produto (o que é, em uma linha) *</label>
+    <input id="product" placeholder="ex.: sérum de reparo de barreira, com ácido hialurônico e ceramidas">
+    <label>Quem compra</label>
+    <input id="customer" placeholder="ex.: mulher 25–35, pele sensível, rotina simples">
+
+    <label>Origem do produto</label>
+    <div class="seg" id="byo">
+      <button data-v="none" class="on">Gerar do zero</button>
+      <button data-v="photo">Tenho foto</button>
+      <button data-v="screenshot">Tenho print da loja</button>
+    </div>
+
+    <label>Formato</label>
+    <div class="formats" id="formats"></div>
+    <div class="muted" id="fmtHelp" style="margin-top:6px"></div>
+
+    <label>Creator (idade, visual, roupa, cômodo) — vazio = a IA escolhe / template usa o exemplo</label>
+    <textarea id="creator" placeholder="ex.: homem, fim dos 20, barba curta, moletom cinza, mesa de trabalho em casa com notebook e caneca"></textarea>
+    <div class="row">
+      <div><label>Gênero da voz</label>
+        <select id="gender"><option value="female">feminina</option><option value="male">masculina</option></select></div>
+      <div><label>Plataforma-alvo</label>
+        <select id="target"></select></div>
+    </div>
+    <label>Observações (opcional)</label>
+    <textarea id="extra" placeholder="ex.: não prometer efeito médico; mencionar que é vegano; tom mais sarcástico"></textarea>
+
+    <details id="llmBox" style="margin-top:12px">
+      <summary class="muted" style="cursor:pointer">Backend da IA (só modo IA)</summary>
+      <label>Provedor</label>
+      <select id="llmProvider">
+        <option value="oauth">Claude OAuth do Claude Code (padrão, roda local, custo zero)</option>
+        <option value="openrouter">OpenRouter (opcional, sua chave)</option>
+      </select>
+      <div id="llmKeyRow" class="hidden">
+        <label>Chave OpenRouter (fica só neste navegador)</label>
+        <input id="llmKey" type="password" placeholder="sk-or-…" autocomplete="off">
+      </div>
+      <label>Modelo (vazio = claude-sonnet-5)</label>
+      <input id="llmModel" placeholder="claude-sonnet-5 · claude-opus-5 · ou slug do OpenRouter">
+      <div class="muted" style="margin-top:6px">OAuth usa <code>~/.claude/.credentials.json</code> da máquina onde o servidor roda (rode <code>claude login</code>). No deploy público não há OAuth: use OpenRouter.</div>
+    </details>
+
+    <div class="actions">
+      <button class="btn" id="go">Montar brief</button>
+      <button class="btn sec" id="example">Carregar exemplo do pack</button>
+    </div>
+    <div class="err hidden" id="err"></div>
+    <div class="hist" id="hist"></div>
+  </section>
+
+  <section>
+    <div class="card" id="outCard">
+      <h2>2 · Falas (5 beats · meta 70–80 palavras)</h2>
+      <div class="note hidden" id="aiNote"></div>
+      <div class="lines" id="lines"></div>
+      <div class="count" id="count"></div>
+      <div class="hist hidden" id="hooks"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px" id="promptsCard">
+      <h2>3 · Prompts prontos</h2>
+      <div class="step">
+        <div class="head"><h3>STEP 1 — PRODUTO</h3><button class="copy" data-copy="p1">copiar</button></div>
+        <div class="params" id="h1"></div>
+        <pre id="p1"></pre>
+      </div>
+      <div class="step">
+        <div class="head"><h3 id="t2">STEP 2 — CREATOR</h3><button class="copy" data-copy="p2">copiar</button></div>
+        <div class="params" id="h2"></div>
+        <pre id="p2"></pre>
+      </div>
+      <div class="step">
+        <div class="head"><h3>STEP 3 — VÍDEO (Seedance 2.5, one-take 30 s)</h3><button class="copy" data-copy="p3">copiar</button></div>
+        <div class="params" id="h3"></div>
+        <pre id="p3"></pre>
+      </div>
+      <div class="muted" id="tnote"></div>
+      <div class="actions">
+        <button class="btn" id="copyAll">Copiar brief completo</button>
+        <button class="btn sec" id="dl">Baixar .md</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>4 · QA antes de entregar</h2>
+      <ul class="rules" id="rules"></ul>
+    </div>
+  </section>
+</main>
+
+<footer>Fonte: "The Seedance 2.5 UGC Ads Pack" (Zubair Trabzada · AI Workshop, 2026), adaptado. Os prompts ficam em inglês; só as falas mudam de idioma. Nada é gerado aqui: você cola os prompts na plataforma escolhida.</footer>
+
+<script type="module">
+import { VERSION, FORMATS, BEATS, RULES, TARGETS, WORDS_MIN, WORDS_MAX, countWords, buildVideoPrompt } from "./formats.js";
+
+const $ = (id) => document.getElementById(id);
+const state = { mode: "template", byo: "none", format: "01", ai: null };
+$("ver").textContent = VERSION;
+
+// ---- UI: formatos, alvos, regras
+$("formats").innerHTML = FORMATS.map(f => `<div class="fmt" data-id="${f.id}"><b>${f.id} · ${f.title}</b><small>${f.subtitle}</small></div>`).join("") +
+  `<div class="fmt" data-id="auto"><b>auto</b><small>a IA escolhe (só modo IA)</small></div>`;
+$("target").innerHTML = Object.entries(TARGETS).map(([k, t]) => `<option value="${k}">${t.name}</option>`).join("");
+$("rules").innerHTML = RULES.map(r => `<li><input type="checkbox"><div><b>${r.n}. ${r.title}</b><span>${r.body}</span></div></li>`).join("");
+
+function seg(id, key, cb) {
+  $(id).addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    [...$(id).children].forEach(x => x.classList.toggle("on", x === b));
+    state[key] = b.dataset.v; cb && cb();
+  });
+}
+seg("mode", "mode", () => { $("go").textContent = state.mode === "ai" ? "Gerar com IA" : "Montar brief"; });
+seg("byo", "byo", () => { if (state.byo !== "none" && !["08","09"].includes(state.format)) pickFormat(state.byo === "screenshot" ? "09" : "08"); });
+
+function pickFormat(id) {
+  state.format = id;
+  [...$("formats").children].forEach(x => x.classList.toggle("on", x.dataset.id === id));
+  const f = FORMATS.find(x => x.id === id);
+  $("fmtHelp").textContent = f ? `Melhor pra: ${f.bestFor} Dica: ${f.tip}` : "A IA escolhe o formato a partir do produto e do cliente.";
+  $("t2").textContent = f && f.kind === "pov" ? "STEP 2 — CENA ÂNCORA (POV, sem creator)" : "STEP 2 — CREATOR";
+  renderLines();
+}
+$("formats").addEventListener("click", (e) => { const c = e.target.closest(".fmt"); if (c) pickFormat(c.dataset.id); });
+
+// ---- Falas
+function currentFormat() { return FORMATS.find(x => x.id === (state.format === "auto" ? (state.ai?.format_id || "01") : state.format)); }
+function renderLines(lines) {
+  const f = currentFormat();
+  const pre = lines || (state.ai?.lines) || f.example.lines;
+  $("lines").innerHTML = BEATS.map((b, i) => `<div class="line"><div class="t">${b.t}<br>${b.label}</div><div><textarea data-i="${i}" rows="2">${esc(pre[i] || "")}</textarea><small>${(state.ai?.beat_actions || f.beats)[i]}</small></div></div>`).join("");
+  updateCount();
+}
+function getLines() { return [...$("lines").querySelectorAll("textarea")].map(t => t.value.trim()); }
+function updateCount() {
+  const n = countWords(getLines());
+  const ok = n >= WORDS_MIN - 15 && n <= WORDS_MAX + 5;
+  $("count").className = "count " + (ok ? "ok" : "bad");
+  $("count").textContent = `${n} palavras faladas · meta ${WORDS_MIN}–${WORDS_MAX} (30 s em ritmo natural)` + (n > WORDS_MAX + 5 ? " — vai atropelar; corte" : n < WORDS_MIN - 15 ? " — vai sobrar silêncio; some uma frase" : "");
+}
+$("lines").addEventListener("input", () => { updateCount(); build(); });
+
+// ---- Montagem dos prompts
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+function v(id) { return $(id).value.trim(); }
+
+function templateProductPrompt(f) {
+  const brand = v("brand"), product = v("product") || f.example.product;
+  if (state.byo === "photo") return `Using the attached product photo as the exact reference, recreate this product faithfully as a clean e-commerce product photograph — identical shape, colors, label text and logo — placed on [a surface that fits the product], soft natural light, photoreal, no watermark.`;
+  if (state.byo === "screenshot") return `Using the product in the attached screenshot as the exact reference — identical shape, colors, label and logo, ignore any website interface, buttons or text around it — recreate it as a clean photorealistic product photograph in [the setting where it gets used], natural daylight, no watermark.`;
+  if (!v("product")) return f.example.product_prompt;
+  const label = brand ? `label reading '${brand} · [two short lines]'` : "short label, at most two short lines";
+  return `Clean e-commerce product photograph of ${product}, ${label}, on [a surface that fits the product], soft natural window light, photoreal, no watermark.`;
+}
+function templateCreatorPrompt(f) {
+  const c = v("creator");
+  if (!c) return f.example.creator_prompt;
+  if (f.kind === "pov") return `First-person POV photo looking down at [the surface where the product gets used], ${c}, bright window daylight, authentic iPhone photo, photoreal.`;
+  return `Unretouched casual iPhone front-camera style portrait of ${c}, natural light, bare real skin texture, authentic amateur selfie framing, friendly relaxed expression, no beauty filter, no retouching.`;
+}
+
+let last = null;
+function build() {
+  const f = currentFormat();
+  const ai = state.mode === "ai" ? state.ai : null;
+  const brand = v("brand") || (ai ? "" : (v("product") ? "" : f.example.brand));
+  const product = v("product") || f.example.product;
+  const gender = ai?.gender || v("gender");
+  const person = ai?.person || (gender === "male" ? "man" : "woman");
+  const setting = ai?.setting || (f.kind === "pov" ? "" : "[in the same room as the portrait]");
+  const fmt = ai ? { ...f, beats: ai.beat_actions } : f;
+  const p1 = ai?.product_prompt || templateProductPrompt(f);
+  const p2 = ai?.creator_prompt || templateCreatorPrompt(f);
+  const p3 = buildVideoPrompt({ format: fmt, brand, product, person, setting, gender, lang: v("lang"), lines: getLines() });
+  const t = TARGETS[v("target")];
+  $("h1").textContent = t.step1; $("h2").textContent = t.step2; $("h3").textContent = t.step3; $("tnote").textContent = t.note;
+  $("p1").textContent = p1; $("p2").textContent = p2; $("p3").textContent = p3;
+  last = { f, t, brand, product, p1, p2, p3, lines: getLines(), words: countWords(getLines()) };
+}
+["brand","product","customer","creator","gender","target","lang","extra"].forEach(id => $(id).addEventListener("input", () => { if (state.mode === "template") build(); }));
+
+function fullMd() {
+  if (!last) return "";
+  const { f, t, brand, product, p1, p2, p3, lines, words } = last;
+  return `# UGC brief — ${brand ? brand + " · " : ""}${product}
+Formato ${f.id} · ${f.title} · alvo ${t.name} · falas em ${v("lang")} · ${words} palavras
+${state.ai?.notes_pt ? "\n> " + state.ai.notes_pt + "\n" : ""}
+## STEP 1 — PRODUTO
+${t.step1}
+
+${p1}
+
+## STEP 2 — ${f.kind === "pov" ? "CENA ÂNCORA (POV)" : "CREATOR"}
+${t.step2}
+
+${p2}
+
+## STEP 3 — VÍDEO
+${t.step3}
+
+${p3}
+
+## Falas
+${BEATS.map((b, i) => `- ${b.t} ${b.label}: ${lines[i]}`).join("\n")}
+${state.ai?.hook_alternatives?.length ? "\nHooks alternativos:\n" + state.ai.hook_alternatives.map(h => "- " + h).join("\n") : ""}
+
+## QA
+${RULES.map(r => `- [ ] ${r.title}`).join("\n")}
+
+## Nota da plataforma
+${t.note}
+`;
+}
+
+// ---- Ações
+document.addEventListener("click", async (e) => {
+  const c = e.target.closest("[data-copy]"); if (!c) return;
+  await navigator.clipboard.writeText($(c.dataset.copy).textContent);
+  c.textContent = "copiado ✓"; setTimeout(() => c.textContent = "copiar", 1200);
+});
+$("copyAll").addEventListener("click", async () => { await navigator.clipboard.writeText(fullMd()); $("copyAll").textContent = "copiado ✓"; setTimeout(() => $("copyAll").textContent = "Copiar brief completo", 1200); });
+$("dl").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([fullMd()], { type: "text/markdown" }));
+  a.download = `ugc-${(last?.brand || last?.product || "brief").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40)}.md`;
+  a.click();
+});
+$("example").addEventListener("click", () => {
+  const f = currentFormat();
+  $("brand").value = f.example.brand.startsWith("[") ? "" : f.example.brand;
+  $("product").value = f.example.product.startsWith("[") ? "" : f.example.product;
+  $("customer").value = f.example.customer.startsWith("[") ? "" : f.example.customer;
+  $("creator").value = ""; $("lang").value = "en"; state.ai = null;
+  renderLines(f.example.lines); build();
+});
+
+$("go").addEventListener("click", async () => {
+  $("err").classList.add("hidden");
+  if (state.mode === "template") { state.ai = null; $("aiNote").classList.add("hidden"); $("hooks").classList.add("hidden"); build(); saveHist(); return; }
+  if (!v("product")) { showErr("Preencha o produto."); return; }
+  const llm = { provider: $("llmProvider").value, apiKey: v("llmKey") || undefined, model: v("llmModel") || undefined };
+  if (llm.provider === "openrouter" && !llm.apiKey) { showErr("Informe a chave do OpenRouter em \"Backend da IA\" (ou o servidor precisa ter OPENROUTER_API_KEY)."); }
+  saveLlm();
+  $("go").disabled = true; $("go").textContent = "Gerando…";
+  try {
+    const r = await fetch("api/generate", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ brand: v("brand"), product: v("product"), customer: v("customer"), format: state.format, creator: v("creator"), lang: v("lang"), byo: state.byo, extra: v("extra"), llm }) });
+    let j;
+    try { j = await r.json(); } catch { throw new Error(r.status === 404 ? "Este endereço serve só o modo Template (sem servidor). Pra usar a IA, rode o app local (npm run dev) ou o deploy com função serverless." : `Resposta inválida do servidor (${r.status})`); }
+    if (!r.ok) throw new Error(j.error || r.statusText);
+    state.ai = j;
+    if (state.format === "auto") { pickFormat(j.format_id); state.format = "auto"; [...$("formats").children].forEach(x => x.classList.toggle("on", x.dataset.id === "auto" || x.dataset.id === j.format_id)); }
+    $("gender").value = j.gender;
+    renderLines(j.lines);
+    $("aiNote").classList.remove("hidden");
+    $("aiNote").textContent = (j.format_reason ? j.format_reason + " " : "") + (j.notes_pt || "") + ` (${j.model})`;
+    $("hooks").classList.remove("hidden");
+    $("hooks").innerHTML = `<span class="muted">hooks alternativos:</span>` + (j.hook_alternatives || []).map(h => `<button data-hook="${esc(h)}">${esc(h)}</button>`).join("");
+    build(); saveHist();
+  } catch (err) { showErr(String(err.message || err)); }
+  finally { $("go").disabled = false; $("go").textContent = "Gerar com IA"; }
+});
+$("hooks").addEventListener("click", (e) => { const b = e.target.closest("[data-hook]"); if (!b) return; $("lines").querySelector("textarea").value = b.dataset.hook; updateCount(); build(); });
+function showErr(m) { $("err").textContent = m; $("err").classList.remove("hidden"); }
+
+// ---- Histórico (localStorage, por navegador)
+function saveHist() {
+  try {
+    const h = JSON.parse(localStorage.getItem("ugc.hist") || "[]");
+    const item = { ts: Date.now(), brand: v("brand"), product: v("product"), customer: v("customer"), creator: v("creator"), lang: v("lang"), gender: v("gender"), target: v("target"), extra: v("extra"), format: state.format, byo: state.byo, ai: state.ai, lines: getLines() };
+    localStorage.setItem("ugc.hist", JSON.stringify([item, ...h.filter(x => x.product !== item.product || x.format !== item.format)].slice(0, 12)));
+    renderHist();
+  } catch {}
+}
+function renderHist() {
+  let h = []; try { h = JSON.parse(localStorage.getItem("ugc.hist") || "[]"); } catch {}
+  $("hist").innerHTML = h.map((x, i) => `<button data-h="${i}">${esc((x.brand ? x.brand + " · " : "") + (x.product || "?").slice(0, 28))} · ${x.format}</button>`).join("");
+}
+$("hist").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-h]"); if (!b) return;
+  let h = []; try { h = JSON.parse(localStorage.getItem("ugc.hist") || "[]"); } catch {}
+  const x = h[+b.dataset.h]; if (!x) return;
+  ["brand","product","customer","creator","lang","gender","target","extra"].forEach(k => $(k).value = x[k] || $(k).value);
+  state.byo = x.byo; [...$("byo").children].forEach(c => c.classList.toggle("on", c.dataset.v === x.byo));
+  state.ai = x.ai || null; pickFormat(x.format === "auto" ? (x.ai?.format_id || "01") : x.format); renderLines(x.lines); build();
+});
+
+// ---- Backend da IA (preferência por navegador)
+function saveLlm() { try { localStorage.setItem("ugc.llm", JSON.stringify({ provider: $("llmProvider").value, apiKey: v("llmKey"), model: v("llmModel") })); } catch {} }
+function loadLlm() {
+  try { const x = JSON.parse(localStorage.getItem("ugc.llm") || "null"); if (x) { $("llmProvider").value = x.provider || "oauth"; $("llmKey").value = x.apiKey || ""; $("llmModel").value = x.model || ""; } } catch {}
+  $("llmKeyRow").classList.toggle("hidden", $("llmProvider").value !== "openrouter");
+}
+$("llmProvider").addEventListener("change", () => { $("llmKeyRow").classList.toggle("hidden", $("llmProvider").value !== "openrouter"); saveLlm(); });
+
+// ---- init
+pickFormat("01"); renderHist(); loadLlm(); build();
+</script>
+</body>
+</html>

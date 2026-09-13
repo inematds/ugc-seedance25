@@ -1,0 +1,632 @@
+FREE   PROMPT     PACK    ·   SEEDANCE    2.5   +    CLAUDE   CODE
+
+
+
+
+The Seedance 2.5
+UGC Ads Pack
+How to generate 30-second creator ads that look like a real person filmed them
+on a real phone — the three-step recipe, nine copy-paste prompts (seven
+ready-made ad formats plus two bring-your-own-product templates), and the
+realism rules that keep them from looking AI-made.
+
+
+
+
+ZUBAIR TRABZADA                             AI WORKSHOP                          2026 EDITION
+Why Seedance 2.5 for UGC ads
+
+UGC-style creator video is the single best-performing ad format right now — authentic, benefit-led, native
+to the feed. The problem was always production: creators, filming, reshoots. Seedance 2.5 on the
+Higgsfield MCP collapses all of it: one generation gives you a continuous 30-second talking-head
+take at 1080p with the voice generated in the same pass, lip-synced to lines you script word for word.
+No stitching, no separate voiceover, no cuts to hide seams.
+
+PA R A M E T E R                       W H AT Y O U U S E F O R U G C
+
+
+Model + mode                           seedance_2_5 with mode: omni_reference — the mode is required whenever you pass
+                                       reference images. Plain t2v rejects them.
+
+References                             Two images via image_references: your product shot and your creator portrait. Pass the
+                                       generation job ids, not uploads — platform-generated images skip the IP check that stalls
+                                       raw uploads.
+
+
+Duration                               4–30 seconds. The 30-second one-take is the whole pitch: one unbroken selfie video,
+                                       exactly the length UGC converts at (10–45s).
+
+Resolution                             1080p (1080×1920 vertical) for the ad you ship. Draft at 720p for half the cost while testing a
+                                       concept.
+
+Aspect ratio                           9:16, always. TikTok, Reels, Shorts.
+
+
+Audio                                  generate_audio: true — speech, room tone and lip-sync render natively in the same job.
+                                       Quote every spoken line in the prompt at its timestamp.
+
+Cost                                   A 30s 1080p one-take runs about 390 credits. A 720p draft of the same about 195. Both
+                                       product and creator stills are pennies.
+
+Render time                            18–22 minutes for a 30s 1080p job. Submit all your ads in one parallel batch and QA them
+                                       together.
+
+
+
+The formats that convert
+
+The 2026 performance data is unambiguous: UGC video takes the largest share of winning ad creative of
+any format, the product must appear in the first three seconds, and creative fatigues in about 72 hours on
+TikTok — which is exactly why generating variants beats hiring creators. The nine prompts in this pack
+cover the seven UGC structures that keep winning — the review, the confession, the routine, the
+unboxing, the try-on, the product-only POV, and the taste test — plus two templates for the most
+common real case of all: you already have the product, and all you have is a photo or a screenshot of it.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                ZUBAIR TRABZADA · AI WORKSHOP
+The three-step recipe
+
+Every prompt in this pack runs the same pipeline. Give the whole brief to Claude Code with the Higgsfield
+MCP connected and it executes all three steps — or run the steps yourself in the Higgsfield UI.
+
+
+1       Generate the product shot first (GPT Image 2).
+        One clean e-commerce photo: product, simple surface, natural light, short label text — a brand name plus two short
+        lines renders perfectly legible; a paragraph turns to gibberish. Set quality high. This image is your product's identity
+        for every ad you ever make for it.
+
+
+2       Generate the creator (Soul 2).
+        An "unretouched iPhone front-camera portrait" in the exact room the ad happens in — bare skin texture, no beauty
+        filter, amateur framing. The portrait's room, outfit and lighting should match the video prompt so the model locks
+        onto one coherent scene. Keep the creator's job id: the same face can front an entire series.
+
+
+3       Generate the ad (Seedance 2.5, one take).
+        Pass both job ids as image_references with mode: omni_reference, 9:16, 1080p, duration 30, audio on. The
+        prompt is a timestamped shot list: five beats, each with the exact line the creator speaks in quotes, plus a realism
+        block and an audio spec. The model renders the performance, the voice and the lip-sync in one pass.
+
+
+The five-beat script skeleton
+
+Every 30-second ad in this pack follows the same arc, and the timestamps matter — they pace the
+performance. 0–4s HOOK: mid-thought opener with the product already rising into frame. 4–11s WHAT
+IT IS: name it, show the label. 11–18s DEMO: use it on camera — apply it, eat one, put it on. 18–25s
+RESULT: the proof moment, leaning into the lens. 25–30s CLOSE: one low-pressure line, never a hard
+sell. About 70–80 spoken words total fills 30 seconds at a natural pace — write more and the delivery
+rushes.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                          ZUBAIR TRABZADA · AI WORKSHOP
+PROMPT 01 · THE CLASSIC REVIEW
+
+
+The Skincare Confession
+Best for: serums, moisturizers, haircare, anything applied on camera — the default UGC ad.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for DEW — a fictional barrier repair serum.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of a frosted glass skincare
+     serum bottle with a white dropper cap, minimal matte white label reading 'DEW · Barrier Repair Serum · Hyaluronic +
+     Ceramides', on a beige stone bathroom counter, soft natural window light, photoreal, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a woman in her
+     late 20s, wavy hair loosely tied back, light freckles, bare skin with visible pores, plain grey ribbed tank top,
+     standing in a bright everyday apartment bathroom, flat natural daylight, authentic amateur selfie framing, no makeup,
+     no beauty filter, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     woman from the reference stands in her bright bathroom holding the phone at arm's length, talking straight to camera
+     like a friend, slight natural handheld sway. The serum bottle from the reference is the only product.
+     0-4s: she leans in mid-thought: 'Okay, I need to talk about this, because two weeks ago my skin was a wreck.' while
+     raising the bottle into frame next to her face.
+     4-10s: taps the label: 'This is the DEW barrier repair serum. Hyaluronic, ceramides... that's literally it.'
+     10-17s: drops two drops onto her fingertips and pats it onto her cheek: 'It's not sticky. It just sinks in, like
+     water.'
+     17-24s: tilts her cheek toward the lens into the window light: 'Look at that. No filter, no makeup. That's just my skin
+     now.'
+     24-30s: back to center, small shrug and grin, holds the bottle up: 'If your skin barrier is fried... just try it. Thank
+     me later.'
+     Realism: pore-level natural skin texture, flat daylight, authentic amateur framing, no beauty filter, no cinematic
+     grade, no on-screen text.
+     AUDIO: her real voice lip-synced exactly to the quoted lines, natural conversational pacing with tiny pauses, dry quiet
+     room tone, field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: swap the product in steps 1 and 3, keep everything else. The hook line is the highest-leverage edit — it must
+   sound like the middle of a story, never like the start of an ad.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                01 / 09
+PROMPT 02 · THE DESK CONFESSION
+
+
+The Problem-Ritual-Result Ad
+Best for: supplements, coffee, productivity tools — anything bought to fix a daily pain.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for RISE — fictional lion's mane focus gummies.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of an amber glass supplement
+     jar with a black lid, kraft-paper label reading 'RISE · Lion's Mane Focus Gummies', a few translucent red berry gummies
+     beside the jar on a light wood kitchen counter, bright daylight, photoreal, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a man in his late
+     20s, short dark hair, light stubble, charcoal hoodie, sitting at a cluttered home desk with a laptop and coffee mug
+     behind him, everyday apartment daylight, real skin texture, authentic amateur selfie framing, tired-but-friendly
+     expression, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     man from the reference sits at his home desk, phone in one hand, talking to camera like he's telling a friend a secret,
+     slight handheld movement. The gummies jar from the reference is the only product.
+     0-4s: 'So I used to hit a wall every single day at 2pm. Like, useless.' while lifting the jar into frame.
+     4-11s: turns the label to the lens: 'These are lion's mane focus gummies. I take two with my coffee, that's the whole
+     routine.'
+     11-18s: opens the jar, pops one gummy in his mouth, chews, nods: 'They actually taste good, which... surprised me.'
+     18-25s: gestures back at the laptop, jar still in hand: 'No jitters, no crash. I've cleared my whole list before lunch
+     every day this week.'
+     25-30s: leans in slightly, taps the lid: 'Just run it for one week. That's all I'm saying.'
+     Realism: real skin texture with stubble detail, everyday apartment daylight, authentic amateur framing, no beauty
+     filter, no cinematic grade, no on-screen text.
+     AUDIO: his real voice lip-synced exactly to the quoted lines, relaxed low-key delivery, dry quiet apartment room tone,
+     field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: the eating-on-camera beat is what sells a consumable — never cut it. For a drink, swap the beat for a sip and an
+   honest little exhale; for an app, swap it for tapping through the phone.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                               02 / 09
+PROMPT 03 · THE NIGHT ROUTINE
+
+
+The Cozy Gadget Demo
+Best for: beauty devices, wellness gadgets, home tech — products with a visible "wow" state.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for a fictional LED red-light therapy face mask.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of a white silicone LED light-
+     therapy face mask with rows of small red and amber LEDs glowing softly, resting on a marble vanity next to its white
+     controller remote, soft evening lamp light, photoreal, no text on product, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a Black woman in
+     her early 30s, neat shoulder-length braids, glowing real skin with visible pores, oversized cream sweatshirt, sitting
+     on her bed in a cozy warmly lit bedroom in the evening, string lights softly blurred behind her, authentic amateur
+     selfie framing, warm genuine smile, minimal makeup, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references — if a dark-mood preset is recommended instead of submitting, decline it and resubmit):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     woman from the reference sits on her bed in her warmly lit bedroom, phone at arm's length, warm playful energy, slight
+     natural handheld sway. The LED mask from the reference, LEDs glowing, is the only product.
+     0-4s: 'Everyone keeps asking what I changed about my skin... it's this thing.' while raising the mask into frame, LEDs
+     already glowing red.
+     4-11s: turns the glowing mask toward the lens: 'Red light therapy mask. Ten minutes a night, that's it.'
+     11-18s: places the glowing mask over her face, holds it there a beat, laughs: 'I know I look like a movie villain right
+     now.'
+     18-25s: lifts the mask off, leans toward the lens showing her cheek: 'But my dark spots are fading, and I do it
+     literally lying in bed.'
+     25-30s: hugs the mask to her chest, grins: 'Laziest skincare I own. Obsessed.'
+     Realism: pore-level natural skin texture, warm cozy lamp light, authentic amateur framing, no beauty filter, no
+     cinematic grade, no on-screen text.
+     AUDIO: her real voice lip-synced exactly to the quoted lines, warm amused delivery, dry quiet bedroom room tone, field-
+     recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: the self-deprecating joke mid-demo ("movie villain") is doing real work — it's the beat that makes the whole ad
+   feel human. Give every gadget ad one moment where the creator laughs at themselves.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                03 / 09
+PROMPT 04 · THE UNBOXING
+
+
+The First Reaction
+Best for: launches, premium packaging, tech — when the reveal itself is the content.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for AURA — fictional premium wireless earbuds.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of a matte sage-green earbuds
+     charging case, lid open showing white earbuds inside, sitting on top of its minimal matte kraft box printed only with
+     'AURA' in small dark letters, on a light desk, soft daylight, photoreal, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a woman in her
+     early 20s, straight dark hair with curtain bangs, silver hoop earrings, black long-sleeve top, sitting at a tidy desk
+     by a window in a small apartment, neutral daylight, real skin texture, authentic amateur selfie framing, curious
+     excited expression, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     woman from the reference sits at her desk, phone propped or held in one hand, genuine first-reaction energy. The AURA
+     earbuds box and sage case from the reference are the only product.
+     0-4s: she holds the sealed kraft box up to the lens: 'Okay, these finally came, and I've been waiting three weeks.
+     We're opening them right now.'
+     4-11s: peels the box open on camera, tilts it to show the case seated inside: 'Oh, okay... the box is already nicer
+     than my phone's was.'
+     11-18s: lifts out the sage case, clicks the lid open near the lens: 'Listen to that click. And this green... why is
+     this green so good?'
+     18-25s: puts one earbud in her ear, eyes widen, voice drops a little: 'Oh. Okay. That's... genuinely so much better
+     than what I've been using.'
+     25-30s: looks back at the case in her palm, half-laughs: 'Yeah, these are staying in. Sorry to my old pair.'
+     Realism: real skin texture, neutral daylight, authentic amateur framing, no beauty filter, no cinematic grade, no on-
+     screen text.
+     AUDIO: her real voice lip-synced exactly to the quoted lines, genuine unscripted-feeling reactions with small pauses,
+     real paper and plastic sounds from the unboxing synced to her hands, dry room tone, field-recording quality; no music,
+     no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: the arc is anticipation → package → product → first use → verdict. The reveal must land mid-video, not at the
+   start — the sealed box IS the hook.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                              04 / 09
+P R O M P T 0 5 · T H E T R Y- O N
+
+
+The Fit Check
+Best for: apparel, activewear, accessories, jewelry — anything worn.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for a fictional cloud-soft oversized hoodie brand called
+     LOFT.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of an oatmeal-cream heavyweight
+     oversized hoodie, thick soft fleece visibly plush, neatly folded on a light linen surface with a small woven label
+     reading 'LOFT', soft daylight, photoreal, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a woman in her
+     mid 20s, blonde hair in a claw clip, minimal makeup, plain white tee, standing in front of a full-length mirror in a
+     bright bedroom, natural daylight, real skin texture, authentic amateur mirror-selfie framing, relaxed confident
+     expression, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone selfie video, one single take with no cuts, filmed partly to
+     the front camera and partly into her full-length mirror. The woman from the reference is in her bright bedroom; the
+     oatmeal LOFT hoodie from the reference is the only product.
+     0-4s: front camera, she holds the folded hoodie up and squishes it: 'This is the hoodie everyone's been gatekeeping.
+     Look how thick this is.'
+     4-11s: she pulls it on over her tee in frame, hair clip and all, laughing as her head pops through: 'Okay, first of
+     all, it's like putting on a duvet.'
+     11-18s: turns to the mirror, phone visible in hand, checks the fit side-on: 'It's oversized but it still has, like, a
+     shape? See the drop shoulder?'
+     18-25s: back to front camera close, rubs the sleeve between her fingers near the lens: 'And the inside is the softest
+     thing I own. I'm not exaggerating.'
+     25-30s: hands in the front pocket, little shoulder shrug: 'I got the oatmeal one. I already know I'm buying the grey.'
+     Realism: real fabric texture and drape, natural daylight, authentic amateur framing, no beauty filter, no cinematic
+     grade, no on-screen text.
+     AUDIO: her real voice lip-synced exactly to the quoted lines, light amused delivery, soft fabric rustle synced to the
+     try-on, dry room tone, field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: texture close-ups sell fabric better than any adjective — always script one beat where the material touches the
+   lens. The "buying the grey" closer is a proven pattern: repurchase intent reads as the strongest possible review.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                05 / 09
+P R O M P T 0 6 · T H E P R O D U C T- O N LY P O V
+
+
+The Hands & Voiceover Ad
+Best for: kitchen tools, home goods, stationery — when the product should be the only star.
+
+
+     Create a 30-second UGC product ad with the Higgsfield MCP for FORGE — a fictional Japanese-steel chef's knife. No
+     creator on camera: hands and voiceover only.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of a chef's knife with a
+     hammered Japanese steel blade and dark walnut handle, lying on a light wood cutting board beside a ripe tomato, bright
+     kitchen daylight, photoreal, no watermark."
+
+
+     STEP 2 — no creator portrait for this one. Instead generate a scene anchor (gpt_image_2, quality high, 3:4): "First-
+     person POV photo looking down at a light wood cutting board on a kitchen counter, a woman's hands with short clean
+     nails resting at the edge, a ripe tomato and fresh herbs beside the board, bright window daylight from the left,
+     authentic iPhone photo, photoreal."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone video, one single take with no cuts, first-person POV looking
+     down at the cutting board from the reference. Only the cook's hands and the FORGE knife from the reference ever appear
+     — no face, no body. A relaxed female voice narrates over the footage like she's talking to a friend, not a commercial
+     announcer.
+     0-4s: her hands lift the knife off the board, tilting the hammered blade in the window light. VO: 'I put off buying a
+     real knife for years. Biggest kitchen mistake I ever made.'
+     4-11s: she slices the tomato in slow, effortless strokes, paper-thin slices falling. VO: 'Look at this. No sawing, no
+     squashing. The weight just does it for you.'
+     11-18s: she rocks the blade through a pile of herbs, fast and confident. VO: 'This is the part that got me. It makes
+     you feel like you know what you're doing.'
+     18-25s: she wipes the blade with a cloth and rests it on the board, label side up. VO: 'It's one knife. It replaced
+     four of mine.'
+     25-30s: hands still, knife centered on the board in the light. VO: 'If you cook at all... this is the one thing worth
+     the money.'
+     Realism: real hand and skin detail, bright natural kitchen daylight, authentic amateur POV framing, no cinematic grade,
+     no on-screen text.
+     AUDIO: warm natural female voiceover exactly on the quoted lines, real knife-on-board sounds synced to each cut, dry
+     kitchen room tone, field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: POV works when the satisfaction is visual — slicing, pouring, peeling, clicking. Match every voiceover line to
+   what the hands are doing in that exact beat; drift is what makes a voiceover feel fake.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                 06 / 09
+P R O M P T 0 7 · T H E TA S T E T E S T
+
+
+The Honest Reaction
+Best for: food, beverages, snacks — the reaction is the entire ad.
+
+
+     Create a 30-second UGC creator ad with the Higgsfield MCP for VOLT — a fictional sparkling yuzu energy water with zero
+     sugar.
+
+
+     STEP 1 — PRODUCT (gpt_image_2, quality high, 3:4): "Clean e-commerce product photograph of a slim sleek matte-white
+     beverage can with a thin yellow band, label reading 'VOLT · Sparkling Yuzu · Zero Sugar', beads of condensation on the
+     can, on a concrete kitchen counter, bright daylight, photoreal, no watermark."
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of a man in his
+     early 30s, athletic build, buzzed hair, gym t-shirt, standing in his kitchen with a fridge behind him, bright daylight,
+     real skin texture with light post-workout flush, authentic amateur selfie framing, skeptical half-smile, no
+     retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     man from the reference stands in his kitchen, phone at arm's length, skeptical-friend energy. The VOLT can from the
+     reference is the only product.
+     0-4s: he holds the can up to the lens, unimpressed: 'Every energy drink says it doesn't taste like battery acid. Every
+     energy drink is lying.'
+     4-11s: turns the label to camera: 'Sparkling yuzu, zero sugar. Sure. We've heard that before.'
+     11-18s: cracks the can open on camera, takes a real slow sip, pauses, brow furrows, then genuine surprise: 'Wait.'
+     18-25s: looks at the can, then back at the lens: 'That actually just tastes like... a really good lemon soda? Where's
+     the fake sweetener taste?'
+     25-30s: takes a second longer sip, points at the can: 'Okay. I take it back. This one's not lying.'
+     Realism: real skin texture, bright kitchen daylight, authentic amateur framing, no beauty filter, no cinematic grade,
+     no on-screen text.
+     AUDIO: his real voice lip-synced exactly to the quoted lines, dry sarcastic-to-surprised delivery, the real crack-hiss
+     of the can opening and quiet carbonation synced to the sip, dry kitchen room tone, field-recording quality; no music,
+     no water droplets, no synthesized blips."
+
+
+
+
+   Make it yours: the skeptic-converted arc outperforms straight praise for anything edible — the first ten seconds attack the
+   category, not the product. The single word 'Wait.' after the sip is the whole ad; keep one beat that quiet.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                   07 / 09
+PROMPT 08 · BRING YOUR OWN PRODUCT
+
+
+The Attached-Photo Review
+Best for: YOUR actual product. Attach one photo or screenshot of it, fill the brackets, paste.
+
+
+     I've attached a photo of my product. Create a 30-second UGC creator ad for it with the Higgsfield MCP. The product is
+     [PRODUCT NAME] — [WHAT IT IS IN ONE LINE], and my customer is [WHO BUYS IT].
+
+
+     STEP 1 — RE-SHOOT MY PRODUCT: upload my attached image to Higgsfield, then use gpt_image_2 (quality high, 3:4) WITH
+     that upload as the reference image: "Using the attached product photo as the exact reference, recreate this product
+     faithfully as a clean e-commerce product photograph — identical shape, colors, label text and logo — placed on [a
+     surface that fits the product], soft natural light, photoreal, no watermark." Use the RESULT's job id from here on,
+     never the raw upload — generated jobs pass straight into video reference slots; raw uploads stall in the IP check.
+
+
+     STEP 2 — CREATOR (soul_2, 3:4, quality 2k): "Unretouched casual iPhone front-camera style portrait of [describe your
+     ideal customer: age, look, outfit], in [the room where this product gets used], natural light, bare real skin texture,
+     authentic amateur selfie framing, friendly relaxed expression, no beauty filter, no retouching."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone front-camera selfie video, one single take with no cuts. The
+     person from the reference is in [the same room], phone at arm's length, talking to camera like a friend, slight natural
+     handheld sway. The [PRODUCT NAME] from the reference is the only product.
+     0-4s: mid-thought hook while raising the product into frame: '[A LINE ABOUT THE PAIN THIS PRODUCT ENDED — e.g. I was
+     this close to giving up on ___ until this showed up.]'
+     4-11s: turns the label to the lens: 'This is [PRODUCT NAME]. [ONE LINE ON WHAT IT IS AND THE ONE THING THAT MAKES IT
+     DIFFERENT.]'
+     11-18s: uses it on camera — [THE DEMO ACTION: applies it / opens it / turns it on / pours it]: '[ONE LINE REACTING
+     HONESTLY TO USING IT.]'
+     18-25s: leans toward the lens with the proof: '[THE RESULT LINE — what changed, stated like a fact to a friend, not a
+     claim.]'
+     25-30s: relaxed close, product held up: '[LOW-PRESSURE CLOSER — e.g. Just try it once. That's all it took for me.]'
+     Realism: pore-level natural skin texture, natural light, authentic amateur framing, no beauty filter, no cinematic
+     grade, no on-screen text.
+     AUDIO: their real voice lip-synced exactly to the quoted lines, natural conversational pacing, dry quiet room tone,
+     field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: the re-shoot step is not optional polish — it is what makes your real label survive into the video AND what gets
+   the reference past the platform's IP check. One good phone photo of the product is enough; the model does the studio work.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                 08 / 09
+PROMPT 09 · BRING YOUR OWN PRODUCT
+
+
+The Screenshot-to-POV Ad
+Best for: turning a store-listing screenshot into a faceless hands-and-voiceover demo — no creator needed.
+
+
+     I've attached a screenshot of my product from [MY STORE / Amazon / Etsy listing]. Create a 30-second faceless UGC-style
+     ad for it with the Higgsfield MCP — hands and voiceover only, no one on camera. The product is [PRODUCT NAME] — [WHAT
+     IT DOES IN ONE LINE].
+
+
+     STEP 1 — RE-SHOOT FROM THE SCREENSHOT: upload the attached screenshot, then gpt_image_2 (quality high, 3:4) with it as
+     reference: "Using the product in the attached screenshot as the exact reference — identical shape, colors, label and
+     logo, ignore any website interface, buttons or text around it — recreate it as a clean photorealistic product
+     photograph in [the setting where it gets used], natural daylight, no watermark." Use this job id everywhere; never pass
+     the raw screenshot into the video.
+
+
+     STEP 2 — SCENE ANCHOR (gpt_image_2, quality high, 3:4): "First-person POV photo looking down at [the surface where the
+     product gets used — counter, desk, bathroom shelf], a person's hands resting at the edge, [one or two props that belong
+     there], bright window daylight, authentic iPhone photo, photoreal."
+
+
+     STEP 3 — VIDEO (seedance_2_5, mode omni_reference, 9:16, 1080p, duration 30, generate_audio true, both job ids as
+     image_references):
+
+
+     "Continuous unedited 30-second vertical handheld iPhone video, one single take with no cuts, first-person POV over the
+     scene from the reference. Only the hands and the [PRODUCT NAME] from the reference ever appear — no face, no body. A
+     relaxed [male/female] voice narrates like they're talking to a friend, never like an announcer.
+     0-4s: hands lift the product into the light, turning it slowly. VO: '[HOOK — the moment you realized you needed this.]'
+     4-11s: hands show the key detail up close — [the label / the mechanism / the texture]. VO: '[WHAT IT IS, and the one
+     spec or ingredient that actually matters.]'
+     11-18s: hands use it in real time — [THE CORE ACTION, described specifically]. VO: '[WHAT IT FEELS LIKE IN USE — the
+     honest observation.]'
+     18-25s: hands present the outcome — [the result on camera]. VO: '[THE RESULT — what it replaced, saved, or fixed.]'
+     25-30s: hands set the product down centered in the light, still. VO: '[LOW-PRESSURE CLOSER — one sentence, no hype.]'
+     Realism: real hand and skin detail, natural daylight, authentic amateur POV framing, no cinematic grade, no on-screen
+     text.
+     AUDIO: warm natural voiceover exactly on the quoted lines, real handling sounds synced to the hands' actions, dry room
+     tone, field-recording quality; no music, no water droplets, no bubbles, no synthesized blips."
+
+
+
+
+   Make it yours: this is the fastest path from "I sell this" to a running ad — one screenshot in, one finished ad out, nobody's face
+   involved. Tell the model to ignore the interface around the product or the ad inherits stray buttons and price tags from your
+   listing.
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                                                                     09 / 09
+Seven rules that keep it real
+
+1       Product in frame within the first three seconds.
+        Ads where the viewer instantly understands what's being sold convert measurably better. Script the product rising
+        into frame during the hook line, never after it.
+
+
+2       Write the realism block or get AI-slop.
+        "Pore-level natural skin texture, flat daylight, authentic amateur framing, no beauty filter, no cinematic grade" —
+        omit it and you get waxy skin, teal-orange bokeh, and an ad everyone scrolls past. Amateur is the aesthetic; don't
+        let the model be cinematic.
+
+
+3       Quote every spoken word, timestamped.
+        Unquoted "she talks about the product" produces mumbling filler. Quoted lines at beats render clean lip-synced
+        speech — and 70–80 words is the ceiling for 30 seconds.
+
+
+4       Ban the sounds you don't want.
+        End the audio spec with a short ban list — "no music, no water droplets, no bubbles, no synthesized blips." Native
+        audio loves adding droplet tones; keep the list short inside a lean prompt or long prompts start failing.
+
+
+5       Expect the mirror lottery.
+        Some takes render mirrored like a real front camera — authentic, but your label reads backwards. It's consistent
+        within a clip, so one ffmpeg hflip pass fixes every frame. Check the label before shipping, not after.
+
+
+6       QA on frozen frames, not vibes.
+        Pull a 3×3 contact sheet (ffmpeg tile filter) and check: exactly one product, two hands max, label legible, face
+        matches the reference, no baked-in captions. Motion hides defects that stills expose instantly.
+
+
+7       Volume is the strategy.
+        Ad creative fatigues in about 72 hours. At roughly 390 credits per finished ad, generating a fresh variant twice a
+        week costs less than one hour of a human creator — same recipe, new hook, new creator, same product job id.
+
+
+
+
+      Want the full system — not just the prompts?
+      Inside the AI Workshop community you get the complete skill installs, the step-by-step lessons, and the
+      playbooks for selling UGC ad packages to real brands. Start with the free community — the link is in the
+      video description, right where you found this pack.
+
+
+      YouTube: Zubair Trabzada | AI Workshop
+
+
+
+
+T H E S E E D A N C E 2 . 5 U G C A D S PA C K                                 ZUBAIR TRABZADA · AI WORKSHOP · 2026
+

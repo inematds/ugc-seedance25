@@ -1,0 +1,20 @@
+{
+  "name": "inema-ugc-seedance25",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gerador de brief UGC (3 prompts: produto, creator, vídeo) para Seedance 2.5 — padrão INEMA · IA via OAuth do Claude Code ou OpenRouter",
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "dev:vercel": "vercel dev",
+    "check": "tsc --noEmit && node --check public/formats.js",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.2.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.0"
+  }
+}
