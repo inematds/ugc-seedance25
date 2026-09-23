@@ -145,7 +145,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       max_tokens: 2048,
       system: buildSystemBlocks(llm, SYSTEM_PROMPT),
       tools: [TOOL],
-      tool_choice: { type: "tool", name: TOOL.name },
+      // Opus 5.5 / Fable 5.1 recusam tool_choice forçado (400): nesses, `auto` + o prompt pedindo a ferramenta.
+      tool_choice: /opus-5[-.]5|fable-5[-.]1/.test(llm.model) ? { type: "auto" } : { type: "tool", name: TOOL.name },
       messages: [{ role: "user", content: userMessage(v.brief) }],
     });
     const tu = (msg.content || []).find((b: any) => b.type === "tool_use");

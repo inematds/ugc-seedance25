@@ -38,6 +38,10 @@ const MODEL_MAP: Record<string, { anthropic: string; openrouter: string }> = {
     anthropic: "claude-sonnet-5",
     openrouter: "anthropic/claude-sonnet-5",
   },
+  "claude-opus-5-5": {
+    anthropic: "claude-opus-5-5",
+    openrouter: "anthropic/claude-opus-5.5",
+  },
   "claude-opus-5": {
     anthropic: "claude-opus-5",
     openrouter: "anthropic/claude-opus-5",
